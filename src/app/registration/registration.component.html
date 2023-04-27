@@ -1,0 +1,24 @@
+<form #userForm="ngForm" (ngSubmit)="onSubmit()" class="container-fluid p-3 d-flex flex-column">
+  <h2 class="text-center mb-5">Add New Profile</h2>
+  <div ngModelGroup="fullName" class="d-flex justify-content-evenly">
+    <div class="form-floating mb-4 w-25">
+      <input type="text" name="firstname" [(ngModel)]="firstName" class="form-control" id="firstname" placeholder="First Name">
+      <label for="firstname">First Name</label>
+    </div>
+    <div class="form-floating mb-4 w-25">
+      <input type="text" name="lastname" [(ngModel)]="lastName"  class="form-control" id="lastname" placeholder="Last Name">
+      <label for="lastname">Last Name</label>
+    </div>
+  </div>
+  <div ngModelGroup="EmailAndPhone" class="d-flex justify-content-evenly">
+    <div class="form-floating mb-4 w-25">
+      <input type="email" name="email" [(ngModel)]="email"  class="form-control" id="email" placeholder="Email">
+      <label for="email">Email</label>
+    </div>
+    <div class="form-floating mb-4 w-25">
+      <input type="tel" name="phone" [(ngModel)]="phone"  class="form-control" id="phone" placeholder="Phone">
+      <label for="phone">Phone Number</label>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary w-25 align-self-center mt-4">Submit</button>
+</form>
