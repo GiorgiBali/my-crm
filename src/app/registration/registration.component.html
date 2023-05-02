@@ -1,5 +1,5 @@
 <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)" class="container-fluid p-3 d-flex flex-column">
-  <h2 class="text-center mb-5">Add New Profile</h2>
+  <h2 class="text-center mb-5">Add New Contact</h2>
   <div ngModelGroup="fullName" class="d-flex justify-content-evenly">
     <div class="form-floating mb-4 w-25">
       <input type="text" name="firstname" [(ngModel)]="firstName" class="form-control" id="firstname" placeholder="First Name" required pattern="[A-Za-z]+">

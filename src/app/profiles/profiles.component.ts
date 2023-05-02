@@ -16,7 +16,8 @@ export class ProfilesComponent {
   constructor() { }
 
   ngDoCheck(): void {
-    this.profiles = User.users;
+    if (User.query != "") { this.profiles = User.searchedUsers; }
+    else { this.profiles = User.users; }
   }
 
   deleteProfile(i: number) {

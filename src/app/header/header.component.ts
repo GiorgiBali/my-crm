@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { User } from '../User';
 
 @Component({
@@ -7,13 +8,24 @@ import { User } from '../User';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  query!: string;
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  clearAll(){
-    User.users = [];
+  find(user: User){
+    return user.firstName === User.query || user.lastName === User.query || user.email === User.query || user.phone === User.query;
+  }
+
+  onSearchSubmit(searchForm: NgForm){
+    User.query = this.query;
+    User.searchedUsers = User.users.filter(this.find);
+    searchForm.reset();
+  }
+
+  resetQuery(){
+    User.searchedUsers = []; User.query = "";
   }
 }
