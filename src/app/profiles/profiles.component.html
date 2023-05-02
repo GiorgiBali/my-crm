@@ -16,6 +16,49 @@
         <td>{{ profile.lastName }}</td>
         <td>{{ profile.email }}</td>
         <td>{{ profile.phone }}</td>
+        <td>
+          <button type="button" (click)="updateProfile(profile, i)" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateModal">Update</button>
+          <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="updateModalLabel">Update Profile</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form #updateUserForm="ngForm" (ngSubmit)="onUpdateSubmit(updateUserForm)" class="container-fluid d-flex flex-column">
+                  <div class="modal-body">
+                    <div ngModelGroup="fullName" class="d-flex justify-content-evenly">
+                      <div class="form-floating mb-4 w-50 me-1">
+                        <input type="text" name="firstname" [(ngModel)]="newFirstName" class="form-control" id="firstname" required pattern="[A-Za-z]+">
+                        <label for="firstname">First Name</label>
+                      </div>
+                      <div class="form-floating mb-4 w-50 ms-1">
+                        <input type="text" name="lastname" [(ngModel)]="newLastName" class="form-control" id="lastname" required pattern="[A-Za-z]+">
+                        <label for="lastname">Last Name</label>
+                      </div>
+                    </div>
+                    <div ngModelGroup="EmailAndPhone" class="d-flex justify-content-evenly">
+                      <div class="form-floating mb-2 w-50 me-1">
+                        <input type="email" name="email" [(ngModel)]="newEmail"  class="form-control" id="email" required pattern="\S+@\S+\.\S+">
+                        <label for="email">Email</label>
+                      </div>
+                      <div class="form-floating mb-2 w-50 ms-1">
+                        <input type="tel" name="phone" [(ngModel)]="newPhone"  class="form-control" id="phone" required pattern="[0-9]+" minlength="9">
+                        <label for="phone">Phone Number</label>
+                      </div>
+                    </div>
+                  </div>
+                  <h5 class=" text-center text-danger" *ngIf="invalidForm">Invalid Input</h5>
+                  <h5 class="text-center text-success" *ngIf="successfulUpdate">Saved</h5>
+                  <div class="modal-footer d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary w-25">Save</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td><button type="button" (click)="deleteProfile(i)" class="btn btn-outline-danger">Delete</button></td>
       </tr>
     </ng-container> 
   </tbody>

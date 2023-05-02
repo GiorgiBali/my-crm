@@ -1,24 +1,25 @@
-<form #userForm="ngForm" (ngSubmit)="onSubmit()" class="container-fluid p-3 d-flex flex-column">
+<form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)" class="container-fluid p-3 d-flex flex-column">
   <h2 class="text-center mb-5">Add New Profile</h2>
   <div ngModelGroup="fullName" class="d-flex justify-content-evenly">
     <div class="form-floating mb-4 w-25">
-      <input type="text" name="firstname" [(ngModel)]="firstName" class="form-control" id="firstname" placeholder="First Name">
+      <input type="text" name="firstname" [(ngModel)]="firstName" class="form-control" id="firstname" placeholder="First Name" required pattern="[A-Za-z]+">
       <label for="firstname">First Name</label>
     </div>
     <div class="form-floating mb-4 w-25">
-      <input type="text" name="lastname" [(ngModel)]="lastName"  class="form-control" id="lastname" placeholder="Last Name">
+      <input type="text" name="lastname" [(ngModel)]="lastName" class="form-control" id="lastname" placeholder="Last Name" required pattern="[A-Za-z]+">
       <label for="lastname">Last Name</label>
     </div>
   </div>
   <div ngModelGroup="EmailAndPhone" class="d-flex justify-content-evenly">
     <div class="form-floating mb-4 w-25">
-      <input type="email" name="email" [(ngModel)]="email"  class="form-control" id="email" placeholder="Email">
+      <input type="email" name="email" [(ngModel)]="email" class="form-control" id="email" placeholder="Email" required pattern="\S+@\S+\.\S+">
       <label for="email">Email</label>
     </div>
     <div class="form-floating mb-4 w-25">
-      <input type="tel" name="phone" [(ngModel)]="phone"  class="form-control" id="phone" placeholder="Phone">
+      <input type="tel" name="phone" [(ngModel)]="phone" class="form-control" id="phone" placeholder="Phone" required pattern="[0-9]+" minlength="9">
       <label for="phone">Phone Number</label>
     </div>
   </div>
-  <button type="submit" class="btn btn-primary w-25 align-self-center mt-4">Submit</button>
+  <h5 class=" text-center text-danger" *ngIf="invalidForm">Invalid Input</h5>
+  <button type="submit" class="btn btn-primary w-25 align-self-center mt-4">Register</button>
 </form>

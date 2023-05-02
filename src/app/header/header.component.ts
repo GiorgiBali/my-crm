@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '../User';
 
 @Component({
   selector: 'app-header',
@@ -12,4 +13,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  clearAll(){
+    User.users = [];
+  }
 }

@@ -7,7 +7,6 @@ import { HeaderComponent } from './header/header.component';
 import { FormsModule } from '@angular/forms';
 import { RegistrationComponent } from './registration/registration.component';
 import { ProfilesComponent } from './profiles/profiles.component';
-import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +14,6 @@ import { HomeComponent } from './home/home.component';
     HeaderComponent,
     RegistrationComponent,
     ProfilesComponent,
-    HomeComponent
   ],
   imports: [
     BrowserModule,

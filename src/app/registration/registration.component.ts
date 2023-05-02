@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../User';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-registration',
@@ -13,13 +14,16 @@ export class RegistrationComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  firstName!: string;
-  lastName!: string;
-  email!: string;
-  phone!: string;
+  firstName!: string; lastName!: string; email!: string; phone!: string;
+  invalidForm: boolean = false;
 
-  onSubmit(){
-    User.users.push(new User(this.firstName, this.lastName, this.email, this.phone));
-    this.firstName = ""; this.lastName = ""; this.email = ""; this.phone = "";
+  onSubmit(userForm: NgForm){
+    if(userForm.form.invalid) { this.invalidForm = true; }
+    else {
+      this.invalidForm = false;
+      User.users.push(new User(userForm.value.fullName.firstname, userForm.value.fullName.lastname,
+        userForm.value.EmailAndPhone.email, userForm.value.EmailAndPhone.phone));
+      userForm.reset();
+    }
   }
 }
