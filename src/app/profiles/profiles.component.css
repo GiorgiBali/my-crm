@@ -1,3 +1,7 @@
 #updateModalLabel {
     margin-left: 310px;
 }
+
+th, td {
+    vertical-align: middle;
+}

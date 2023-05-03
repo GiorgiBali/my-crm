@@ -2,24 +2,27 @@
   <h2 class="text-center mb-5">Add New Contact</h2>
   <div ngModelGroup="fullName" class="d-flex justify-content-evenly">
     <div class="form-floating mb-4 w-25">
-      <input type="text" name="firstname" [(ngModel)]="firstName" class="form-control" id="firstname" placeholder="First Name" required pattern="[A-Za-z]+">
+      <input type="text" name="firstname" [(ngModel)]="firstName" #firstNameRef="ngModel" class="form-control" id="firstname" placeholder="First Name" required pattern="[A-Za-z]+">
       <label for="firstname">First Name</label>
+      <small *ngIf="firstNameRef.invalid && firstNameRef.dirty" class="text-danger">Invalid First Name</small>
     </div>
     <div class="form-floating mb-4 w-25">
-      <input type="text" name="lastname" [(ngModel)]="lastName" class="form-control" id="lastname" placeholder="Last Name" required pattern="[A-Za-z]+">
+      <input type="text" name="lastname" [(ngModel)]="lastName" #lastNameRef="ngModel" class="form-control" id="lastname" placeholder="Last Name" required pattern="[A-Za-z]+">
       <label for="lastname">Last Name</label>
+      <small *ngIf="lastNameRef.invalid && lastNameRef.dirty" class="text-danger">Invalid Last Name</small>
     </div>
   </div>
   <div ngModelGroup="EmailAndPhone" class="d-flex justify-content-evenly">
     <div class="form-floating mb-4 w-25">
-      <input type="email" name="email" [(ngModel)]="email" class="form-control" id="email" placeholder="Email" required pattern="\S+@\S+\.\S+">
+      <input type="email" name="email" [(ngModel)]="email" #emailRef="ngModel" class="form-control" id="email" placeholder="Email" required pattern="\S+@\S+\.\S+">
       <label for="email">Email</label>
+      <small *ngIf="emailRef.invalid && emailRef.dirty" class="text-danger">Invalid Email</small>
     </div>
     <div class="form-floating mb-4 w-25">
-      <input type="tel" name="phone" [(ngModel)]="phone" class="form-control" id="phone" placeholder="Phone" required pattern="[0-9]+" minlength="9">
+      <input type="tel" name="phone" [(ngModel)]="phone" #phoneRef="ngModel" class="form-control" id="phone" placeholder="Phone" required pattern="[0-9]+" minlength="9">
       <label for="phone">Phone Number</label>
+      <small *ngIf="phoneRef.invalid && phoneRef.dirty" class="text-danger">Invalid Phone Number</small>
     </div>
   </div>
-  <h5 class=" text-center text-danger" *ngIf="invalidForm">Invalid Input</h5>
-  <button type="submit" class="btn btn-primary w-25 align-self-center mt-4">Register</button>
+  <button type="submit" class="btn btn-primary w-25 align-self-center mt-4" [disabled]="userForm.invalid">Register</button>
 </form>

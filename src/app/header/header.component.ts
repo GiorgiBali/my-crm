@@ -19,13 +19,12 @@ export class HeaderComponent implements OnInit {
     return user.firstName === User.query || user.lastName === User.query || user.email === User.query || user.phone === User.query;
   }
 
-  onSearchSubmit(searchForm: NgForm){
+  onSearchSubmit(){
     User.query = this.query;
     User.searchedUsers = User.users.filter(this.find);
-    searchForm.reset();
   }
 
-  resetQuery(){
-    User.searchedUsers = []; User.query = "";
+  resetQuery(searchForm: NgForm){
+    User.searchedUsers = []; User.query = ""; searchForm.reset();
   }
 }

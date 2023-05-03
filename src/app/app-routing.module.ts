@@ -4,8 +4,8 @@ import { RegistrationComponent } from './registration/registration.component';
 import { ProfilesComponent } from './profiles/profiles.component';
 
 const routes: Routes = [
-  { path: 'registration', component: RegistrationComponent },
-  { path: 'profiles', component: ProfilesComponent },
+  { path: 'register', component: RegistrationComponent },
+  { path: 'contacts', component: ProfilesComponent },
   { path: '', component: ProfilesComponent }
 ];
 

@@ -9,20 +9,24 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-5">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/profiles" routerLinkActive="active" ariaCurrentWhenActive="page" aria-current="page">Contacts</a>
+          <a class="nav-link" routerLink="/contacts" routerLinkActive="active" ariaCurrentWhenActive="page" aria-current="page">Contacts</a>
         </li>
         <li class="nav-item ms-5">
-          <a class="nav-link" routerLink="/registration" routerLinkActive="active" ariaCurrentWhenActive="page" aria-current="page">Registration</a>
+          <a class="nav-link" routerLink="/register" routerLinkActive="active" ariaCurrentWhenActive="page" aria-current="page">Register</a>
         </li>
-        <li class="ms-5 mt-1">
-          <form #searchForm="ngForm" (ngSubmit)="onSearchSubmit(searchForm)" class="d-flex" role="search">
-            <input class="form-control me-1" name="search" [(ngModel)]="query" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-primary" type="submit">
+        <li id="headerSearch" class="mt-1">
+          <form #searchForm="ngForm" (ngSubmit)="onSearchSubmit()" class="d-flex input-group" role="search">
+            <input class="form-control" name="search" [(ngModel)]="query" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-light" type="submit">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
               </svg>
             </button>
-            <button type="button" (click)="resetQuery()" class="btn btn-outline-secondary ms-1">Reset</button>
+            <button type="button" (click)="resetQuery(searchForm)" class="btn btn-light">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+              </svg>
+            </button>
           </form>
         </li>
       </ul>

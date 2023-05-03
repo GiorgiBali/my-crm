@@ -9,4 +9,6 @@ export class User {
     static users: User[] = [];
     static searchedUsers: User[] = [];
     static query: string = "";
+    static currentUser: User;
+    static queryMode: boolean = false;
 }
