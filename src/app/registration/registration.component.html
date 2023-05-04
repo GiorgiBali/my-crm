@@ -17,12 +17,14 @@
       <input type="email" name="email" [(ngModel)]="email" #emailRef="ngModel" class="form-control" id="email" placeholder="Email" required pattern="\S+@\S+\.\S+">
       <label for="email">Email</label>
       <small *ngIf="emailRef.invalid && emailRef.dirty" class="text-danger">Invalid Email</small>
+      <small *ngIf="repeatedEmail" class="text-danger">Email Already Exists</small>
     </div>
     <div class="form-floating mb-4 w-25">
       <input type="tel" name="phone" [(ngModel)]="phone" #phoneRef="ngModel" class="form-control" id="phone" placeholder="Phone" required pattern="[0-9]+" minlength="9">
       <label for="phone">Phone Number</label>
       <small *ngIf="phoneRef.invalid && phoneRef.dirty" class="text-danger">Invalid Phone Number</small>
+      <small *ngIf="repeatedPhone" class="text-danger">Phone Already Exists</small>
     </div>
   </div>
-  <button type="submit" class="btn btn-primary w-25 align-self-center mt-4" [disabled]="userForm.invalid">Register</button>
+  <button type="submit" class="btn btn-primary w-25 align-self-center mt-4">Register</button>
 </form>

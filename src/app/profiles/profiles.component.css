@@ -5,3 +5,32 @@
 th, td {
     vertical-align: middle;
 }
+
+#viewArea {
+    margin: 20px;
+}
+
+#navView {
+    height: 54px;
+}
+
+.checkbox {
+    width: min-content;
+}
+
+.checkDrop {
+    cursor: pointer;
+}
+
+.pagination {
+    width: min-content;
+    margin-top: 15px;
+}
+
+.step {
+    cursor: pointer;
+}
+
+.page-number {
+    width: max-content;
+}

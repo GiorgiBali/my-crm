@@ -7,3 +7,11 @@
 #headerSearch {
     margin-left: 200px;
 }
+
+.contactItemText {
+    vertical-align: middle;
+}
+
+.contactItem {
+    padding-left: 0;
+}
