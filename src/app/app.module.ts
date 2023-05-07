@@ -6,14 +6,14 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { FormsModule } from '@angular/forms';
 import { RegistrationComponent } from './registration/registration.component';
-import { ProfilesComponent } from './profiles/profiles.component';
+import { ContactsComponent } from './contacts/contacts.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     RegistrationComponent,
-    ProfilesComponent,
+    ContactsComponent,
   ],
   imports: [
     BrowserModule,

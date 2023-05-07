@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { User } from '../User';
+import { Component } from '@angular/core';
+import { Contact } from '../shared/contact';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -7,29 +7,17 @@ import { NgForm } from '@angular/forms';
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
-export class RegistrationComponent implements OnInit {
+export class RegistrationComponent {
+  firstName: string = ""; lastName: string = ""; email: string = ""; phone: string = ""; status: string = ""; date: string = "";
+  repeatedEmail: boolean = false; repeatedPhone: boolean = false; isStatus: boolean = false; isDate: boolean = false;
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-  firstName!: string; lastName!: string; email!: string; phone!: string;
-  repeatedEmail: boolean = false; repeatedPhone: boolean = false; profiles: User[] = User.users;
-
-  checkRepeatedEmail(){
-    return this.profiles.some((user: User) => { return user.email === this.email; });
-  }
-
-  checkInvalidPhone(){
-    return this.profiles.some((user: User) => { return user.phone === this.phone; });
-  }
-
-  onSubmit(userForm: NgForm){
-    this.repeatedEmail = this.checkRepeatedEmail(); this.repeatedPhone = this.checkInvalidPhone();
-    if (userForm.valid && !this.repeatedEmail && !this.repeatedPhone){
-      User.users.push(new User(userForm.value.fullName.firstname, userForm.value.fullName.lastname, userForm.value.EmailAndPhone.email, userForm.value.EmailAndPhone.phone));
-      userForm.reset();
+  onRegistrationSubmit(registrationForm: NgForm){
+    this.repeatedEmail = Contact.contacts.some((contact: Contact) => { return contact.email === this.email; });
+    this.repeatedPhone = Contact.contacts.some((contact: Contact) => { return contact.phone === this.phone; });
+    this.isStatus = this.status !== ""; this.isDate = this.date !== "";
+    if (registrationForm.valid && !this.repeatedEmail && !this.repeatedPhone && this.isStatus && this.isDate){
+      Contact.contacts.push(new Contact(false, this.firstName, this.lastName, this.email, this.phone, this.status, this.date));
+      registrationForm.reset(); this.firstName = ""; this.lastName = ""; this.email = ""; this.phone = ""; this.status = ""; this.date = ""; 
     }
   }
 }

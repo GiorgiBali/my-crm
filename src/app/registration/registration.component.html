@@ -1,4 +1,4 @@
-<form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)" class="container-fluid p-3 d-flex flex-column">
+<form #registrationForm="ngForm" (ngSubmit)="onRegistrationSubmit(registrationForm)" class="container-fluid p-3 d-flex flex-column">
   <h2 class="text-center mb-5">Add New Contact</h2>
   <div ngModelGroup="fullName" class="d-flex justify-content-evenly">
     <div class="form-floating mb-4 w-25">
@@ -24,6 +24,21 @@
       <label for="phone">Phone Number</label>
       <small *ngIf="phoneRef.invalid && phoneRef.dirty" class="text-danger">Invalid Phone Number</small>
       <small *ngIf="repeatedPhone" class="text-danger">Phone Already Exists</small>
+    </div>
+  </div>
+  <div ngModelGroup="StatusAndDate" class="d-flex justify-content-evenly">
+    <div class="form-floating mb-4 w-25">
+      <select class="form-select" id="statusSelect" name="status" [(ngModel)]="status" #statusRef="ngModel" required>
+        <option value="Newcomer">Newcomer</option>
+        <option value="Lead">Lead</option>
+      </select>
+      <label for="statusSelect">Status</label>
+      <small *ngIf="!isStatus && registrationForm.submitted" class="text-danger">Please Choose Status</small>
+    </div>
+    <div class="form-floating mb-4 w-25">
+      <input type="date" name="date" [(ngModel)]="date" #dateRef="ngModel" class="form-control" id="date" placeholder="Date" required>
+      <label for="date">Date</label>
+      <small *ngIf="!isDate && registrationForm.submitted" class="text-danger">Please Choose Date</small>
     </div>
   </div>
   <button type="submit" class="btn btn-primary w-25 align-self-center mt-4">Register</button>
