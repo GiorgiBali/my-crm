@@ -1,16 +1,8 @@
-#updateModalLabel {
-    margin-left: 310px;
-}
-
-th, td {
-    vertical-align: middle;
-}
-
-#viewArea {
+#view-area {
     margin: 20px;
 }
 
-.navView {
+.nav-view {
     height: 54px;
 }
 
@@ -18,8 +10,16 @@ th, td {
     width: min-content;
 }
 
-.checkDrop {
+.check-drop {
     cursor: pointer;
+}
+
+#contacts-title {
+    font-family: 'Times New Roman', Times, serif;
+    letter-spacing: 10px;
+    font-size: 40px;
+    margin-bottom: 0;
+    margin-left: 20px;
 }
 
 .pagination {
@@ -33,4 +33,12 @@ th, td {
 
 .page-number {
     width: max-content;
+}
+
+th, td {
+    vertical-align: middle;
+}
+
+#updateModalLabel {
+    margin-left: 310px;
 }

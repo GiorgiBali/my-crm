@@ -1,14 +1,15 @@
-<div id="viewArea">
-  <nav aria-label="Page navigation example" class="navView bg-secondary p-2 text-white bg-opacity-75 d-flex justify-content-between align-items-center">
+<div id="view-area">
+  <nav aria-label="Page navigation example" class="nav-view bg-secondary p-2 text-white bg-opacity-75 d-flex justify-content-between align-items-center">
     <div class="btn-group">
       <button class="btn btn-secondary btn-sm" type="button">
         <div class="checkbox"><input class="form-check-input" [checked]="mainCheckboxChecked" (change)="mainCheckbox($event)" type="checkbox" id="checkbox0" value="0"></div>
       </button>
       <button type="button" class="btn btn-sm btn-secondary dropdown-toggle dropdown-toggle-split dropdown-menu-start" data-bs-toggle="dropdown" aria-expanded="false"></button>
       <ul class="dropdown-menu">
-        <li><a class="dropdown-item checkDrop" (click)="deleteContacts()">Delete</a></li>
+        <li><a class="dropdown-item check-drop" (click)="deleteContacts()">Delete</a></li>
       </ul>
     </div>
+    <h1 id="contacts-title">Contacts</h1>
     <ul class="pagination me-1">
       <li class="page-item"><a class="page-link step" (click)="prevPage()" aria-label="Previous" [class.disabled]="page === 1"><span aria-hidden="true" class="text-secondary">&laquo;</span></a></li>
       <li class="page-item page-number"><div class="page-link text-secondary">{{page}} / {{(displayedContacts.length - (displayedContacts.length%10)) / 10 + 1}}</div></li>

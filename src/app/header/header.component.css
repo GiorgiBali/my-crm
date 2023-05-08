@@ -1,17 +1,7 @@
-.nav-link {
-    font-size: 18px;
-    font-weight: 500;
-    letter-spacing: 1px;
+app-search {
+    margin-left: 120px;
 }
 
-#headerSearch {
-    margin-left: 200px;
-}
-
-.contactItemText {
-    vertical-align: middle;
-}
-
-.contactItem {
-    padding-left: 0;
+app-account {
+    margin-left: 350px;
 }
