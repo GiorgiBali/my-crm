@@ -1,25 +1,26 @@
-<div id="view-area">
-  <nav aria-label="Page navigation example" class="nav-view bg-secondary p-2 text-white bg-opacity-75 d-flex justify-content-between align-items-center">
+<div class="full-table border border-secondary border-2 rounded-1">
+  <nav class="table-nav bg-secondary p-2 text-white bg-opacity-75 d-flex justify-content-between align-items-center">
     <div class="btn-group">
       <button class="btn btn-secondary btn-sm" type="button">
         <div class="checkbox"><input class="form-check-input" [checked]="mainCheckboxChecked" (change)="mainCheckbox($event)" type="checkbox" id="checkbox0" value="0"></div>
       </button>
       <button type="button" class="btn btn-sm btn-secondary dropdown-toggle dropdown-toggle-split dropdown-menu-start" data-bs-toggle="dropdown" aria-expanded="false"></button>
       <ul class="dropdown-menu">
-        <li><a class="dropdown-item check-drop" (click)="deleteContacts()">Delete</a></li>
+        <li><a class="dropdown-item checkbox-dropdown-item" (click)="deleteContacts()">Delete</a></li>
       </ul>
     </div>
-    <h1 id="contacts-title">Contacts</h1>
+    <h1 class="contacts-title">Contacts</h1>
     <ul class="pagination me-1">
       <li class="page-item"><a class="page-link step" (click)="prevPage()" aria-label="Previous" [class.disabled]="page === 1"><span aria-hidden="true" class="text-secondary">&laquo;</span></a></li>
       <li class="page-item page-number"><div class="page-link text-secondary">{{page}} / {{(displayedContacts.length - (displayedContacts.length%10)) / 10 + 1}}</div></li>
       <li class="page-item"><a class="page-link step" (click)="nextPage()" aria-label="Next" [class.disabled]="displayedContacts.length - page*10 <= 0"><span aria-hidden="true" class="text-secondary">&raquo;</span></a></li>
     </ul>
   </nav>
-  <table class="table table-striped">
+  <table class="table table-striped mb-0">
     <thead class="table-light">
       <tr>
         <th scope="col"></th>
+        <th scope="col">ID</th>
         <th scope="col">Name</th>
         <th scope="col">Email</th>
         <th scope="col">Phone Number</th>
@@ -32,6 +33,7 @@
       <ng-container *ngFor="let contact of displayedContacts.slice(page*10 - 10, page*10); let i=index">
         <tr>
           <th scope="row" class="pe-0"><div class="ms-2"><input class="form-check-input" [checked]="subCheckboxesChecked" (change)="subCheckbox($event)" type="checkbox" id="checkbox{{i+1}}" value="{{ i+1 }}"></div></th>
+          <td>{{ i + 10*(page-1) + 1 }}</td>
           <td>{{ contact.firstName }} {{ contact.lastName }}</td>
           <td>{{ contact.email }}</td>
           <td>{{ contact.phone }}</td>
@@ -43,12 +45,12 @@
                 <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
               </svg>
             </button>
-            <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+            <div class="modal fade" id="updateModal" tabindex="-1" aria-hidden="true">
               <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                  <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="updateModalLabel">Update Profile</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <div class="modal-header update-modal-header">
+                    <h1 class="modal-title update-modal-title">Update Profile</h1>
+                    <button type="button" class="btn-close update-btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <form #updateUserForm="ngForm" (ngSubmit)="onUpdateSubmit(updateUserForm)" class="container-fluid d-flex flex-column">
                     <div class="modal-body">
@@ -77,14 +79,14 @@
                         </div>
                       </div>
                       <div ngModelGroup="StatusAndDate" class="d-flex justify-content-evenly">
-                        <div class="form-floating mb-4 w-50 me-1">
+                        <div class="form-floating w-50 me-1">
                           <select class="form-select" id="statusSelect" name="status" [(ngModel)]="updatedStatus" #statusRef="ngModel" required>
                             <option value="Newcomer">Newcomer</option>
                             <option value="Lead">Lead</option>
                           </select>
                           <label for="statusSelect">Status</label>
                         </div>
-                        <div class="form-floating mb-4 w-50 ms-1">
+                        <div class="form-floating w-50 ms-1">
                           <input type="date" name="date" [(ngModel)]="updatedDate" #dateRef="ngModel" class="form-control" id="date" placeholder="Date" required>
                           <label for="date">Date</label>
                         </div>
@@ -92,6 +94,45 @@
                     </div>
                     <div class="modal-footer d-flex justify-content-center">
                       <button type="submit" class="btn btn-primary w-25" data-bs-dismiss="modal" [disabled]="updateUserForm.invalid">Save</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <button type="button" (click)="addTask(contact, i + 10*(page-1))" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#taskModal">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="green" class="bi bi-calendar-plus" viewBox="0 0 16 16">
+                <path d="M8 7a.5.5 0 0 1 .5.5V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5A.5.5 0 0 1 8 7z"/>
+                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+              </svg>
+            </button>
+            <div class="modal fade" id="taskModal" tabindex="-1" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header task-modal-header">
+                    <h1 class="modal-title task-modal-title">Add Task</h1>
+                    <button type="button" class="btn-close task-btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <form #taskForm="ngForm" (ngSubmit)="onTaskSubmit(taskForm)">
+                    <div class="modal-body d-flex flex-column align-items-center">
+                      <div class="form-floating w-75 mb-3">
+                        <select class="form-select" id="taskSelect" name="task" [(ngModel)]="task" required>
+                          <option value="Call">Call</option>
+                          <option value="Email">Email</option>
+                          <option value="Meeting">Meeting</option>
+                        </select>
+                        <label for="taskSelect">Task</label>
+                      </div>
+                      <div class="form-floating w-75 mb-3">
+                        <input type="date" name="taskDate" [(ngModel)]="date" class="form-control" id="taskDate" placeholder="Date" required>
+                        <label for="date">Date</label>
+                      </div>
+                      <div class="form-floating w-75">
+                        <input type="time" name="time" [(ngModel)]="time" class="form-control" id="time" required>
+                        <label for="time">Time</label>
+                      </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                      <button type="submit" class="btn btn-primary w-50" data-bs-dismiss="modal" [disabled]="taskForm.invalid">Save</button>
                     </div>
                   </form>
                 </div>

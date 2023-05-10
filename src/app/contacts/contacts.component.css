@@ -1,44 +1,75 @@
-#view-area {
-    margin: 20px;
+.full-table {
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
-.nav-view {
-    height: 54px;
+.table-nav {
+  height: 54px;
 }
 
 .checkbox {
-    width: min-content;
+  width: min-content;
 }
 
-.check-drop {
-    cursor: pointer;
+.checkbox-dropdown-item {
+  cursor: pointer;
 }
 
-#contacts-title {
-    font-family: 'Times New Roman', Times, serif;
-    letter-spacing: 10px;
-    font-size: 40px;
-    margin-bottom: 0;
-    margin-left: 20px;
+.contacts-title {
+  font-family: 'Times New Roman', Times, serif;
+  letter-spacing: 10px;
+  font-size: 40px;
+  margin-bottom: 0;
+  margin-left: 20px;
 }
 
 .pagination {
-    width: min-content;
-    margin-top: 15px;
+  width: min-content;
+  margin-top: 15px;
 }
 
 .step {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .page-number {
-    width: max-content;
+  width: max-content;
 }
 
 th, td {
-    vertical-align: middle;
+  vertical-align: middle;
 }
 
-#updateModalLabel {
-    margin-left: 310px;
+.update-modal-header {
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 310px;
+}
+
+.update-modal-title {
+  padding-top: 15px;
+  font-family: 'Times New Roman', Times, serif;
+  letter-spacing: 2px;
+  font-size: 25px;
+}
+
+.update-btn-close {
+  font-size: 18px;
+}
+
+.task-modal-header {
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 190px;
+}
+
+.task-modal-title {
+  padding-top: 15px;
+  font-family: 'Times New Roman', Times, serif;
+  letter-spacing: 2px;
+  font-size: 25px;
+}
+
+.task-btn-close {
+  font-size: 18px;
 }

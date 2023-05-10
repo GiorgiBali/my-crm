@@ -8,15 +8,18 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./contacts.component.css']
 })
 export class ContactsComponent {
-  displayedContacts: Contact[] = []; globalContact!: Contact;
+  displayedContacts: Contact[] = []; globalContact!: Contact; page: number = 1;
+  mainCheckboxChecked: boolean = false; subCheckboxesChecked: boolean = false;
   updatedFirstName!: string; updatedLastName!: string; updatedEmail!: string; updatedPhone!: string; updatedStatus!: string; updatedDate!: string;
-  mainCheckboxChecked: boolean = false;  subCheckboxesChecked: boolean = false;
-  page: number = 1;
+  task = ""; contactId = 0; time = ""; date = "";
 
   ngDoCheck(): void {
     if (Contact.searchMode) { this.displayedContacts = Contact.searchedContacts; }
     else { this.displayedContacts = Contact.contacts; }
   }
+
+  prevPage(){ this.page--; }
+  nextPage(){ this.page++; }
 
   deleteContact(contact: Contact, i: number) {
     if (!Contact.searchMode){ Contact.contacts.splice(i, 1); }
@@ -24,6 +27,14 @@ export class ContactsComponent {
       Contact.contacts = Contact.contacts.filter((obj: Contact) => { return obj.email !== contact.email; });
       Contact.searchedContacts.splice(i, 1);
     }
+  }
+
+  addTask(contact: Contact, i: number) {
+    this.contactId = Number(i) + 1;
+  }
+
+  onTaskSubmit(taskForm: NgForm) {
+    Contact.taskProperties = [this.task, String(this.contactId), this.time, this.date];
   }
 
   updateContact(contact: Contact) {
@@ -105,9 +116,6 @@ export class ContactsComponent {
     }
     this.mainCheckboxChecked = false; this.subCheckboxesChecked = false;
   }
-
-  prevPage(){ this.page--; }
-  nextPage(){ this.page++; }
 
   // --- Helper Functions ---
 

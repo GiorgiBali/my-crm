@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
-import {MatButtonModule} from '@angular/material/button';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
 
-const MaterialComponents = [MatButtonModule];
+const MaterialComponents = [MatDatepickerModule, MatNativeDateModule, MatCardModule, MatTableModule];
 
 @NgModule({
-  imports: [MatButtonModule],
-  exports: [MatButtonModule]
+  imports: [MatDatepickerModule, MatNativeDateModule, MatCardModule, MatTableModule],
+  exports: [MatDatepickerModule, MatNativeDateModule, MatCardModule, MatTableModule]
 })
 export class MaterialModule { }
