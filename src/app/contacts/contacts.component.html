@@ -12,7 +12,7 @@
     <h1 class="contacts-title">Contacts</h1>
     <ul class="pagination me-1">
       <li class="page-item"><a class="page-link step" (click)="prevPage()" aria-label="Previous" [class.disabled]="page === 1"><span aria-hidden="true" class="text-secondary">&laquo;</span></a></li>
-      <li class="page-item page-number"><div class="page-link text-secondary">{{page}} / {{(displayedContacts.length - (displayedContacts.length%10)) / 10 + 1}}</div></li>
+      <li class="page-item page-number"><a class="page-link text-secondary" [class.disabled]="true">{{page}} / {{(displayedContacts.length - (displayedContacts.length%10)) / 10 + 1}}</a></li>
       <li class="page-item"><a class="page-link step" (click)="nextPage()" aria-label="Next" [class.disabled]="displayedContacts.length - page*10 <= 0"><span aria-hidden="true" class="text-secondary">&raquo;</span></a></li>
     </ul>
   </nav>

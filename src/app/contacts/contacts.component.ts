@@ -31,6 +31,7 @@ export class ContactsComponent {
 
   addTask(contact: Contact, i: number) {
     this.contactId = Number(i) + 1;
+    this.task = "Call";
   }
 
   onTaskSubmit(taskForm: NgForm) {

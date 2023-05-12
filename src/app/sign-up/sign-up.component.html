@@ -1,0 +1,64 @@
+<form #signupForm="ngForm" (ngSubmit)="onsignupFormSubmit(signupForm)" class="pt-5 d-flex flex-column align-items-center justify-content-center">
+  <div class="d-flex text-danger mb-4">
+    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
+      <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z"/>
+    </svg>
+    <h1 class="text-danger ms-1">CRM</h1>
+  </div>
+  <div ngModelGroup="fullName" class="d-flex w-50">
+    <div class="form-floating mb-4 w-50 me-1">
+      <input type="text" name="firstname" [(ngModel)]="firstName" #firstNameRef="ngModel" class="form-control" id="firstname" placeholder="First Name" required pattern="[A-Za-z]+">
+      <label for="firstname">First Name</label>
+      <small *ngIf="firstNameRef.invalid && firstNameRef.dirty" class="text-danger">Invalid First Name</small>
+    </div>
+    <div class="form-floating mb-4 w-50 ms-1">
+      <input type="text" name="lastname" [(ngModel)]="lastName" #lastNameRef="ngModel" class="form-control" id="lastname" placeholder="Last Name" required pattern="[A-Za-z]+">
+      <label for="lastname">Last Name</label>
+      <small *ngIf="lastNameRef.invalid && lastNameRef.dirty" class="text-danger">Invalid Last Name</small>
+    </div>
+  </div>
+  <div ngModelGroup="EmailAndPhone" class="d-flex w-50">
+    <div class="form-floating mb-4 w-50 me-1">
+      <input type="email" name="email" [(ngModel)]="email" #emailRef="ngModel" class="form-control" id="email" placeholder="Email" required pattern="\S+@\S+\.\S+">
+      <label for="email">Email</label>
+      <small *ngIf="emailRef.invalid && emailRef.dirty" class="text-danger pe-4">Invalid Email</small>
+      <small *ngIf="repeatedEmail" class="text-danger">Email Already Exists</small>
+    </div>
+    <div class="form-floating mb-4 w-50 ms-1">
+      <input type="tel" name="phone" [(ngModel)]="phone" #phoneRef="ngModel" class="form-control" id="phone" placeholder="Phone" required pattern="[0-9]+" minlength="9">
+      <label for="phone">Phone Number</label>
+      <small *ngIf="phoneRef.invalid && phoneRef.dirty" class="text-danger pe-4">Invalid Phone Number</small>
+      <small *ngIf="repeatedPhone" class="text-danger">Phone Already Exists</small>
+    </div>
+  </div>
+  <div ngModelGroup="PasswordAndConfirmPassword" class="d-flex w-50">
+    <div class="d-flex flex-column w-50 me-1 mb-4">
+      <div class="form-floating w-100 password-group">
+        <input type="password" name="password" [(ngModel)]="password" #passwordRef="ngModel" class="form-control" id="password" placeholder="Password" required minlength="5">
+        <button type="button" class="btn btn-link align-self-center" (click)="togglePassword()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="black" class="bi bi-eye-fill" viewBox="0 0 16 16">
+            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+          </svg>
+        </button>
+        <label for="password">Password</label>
+      </div>
+      <small *ngIf="passwordRef.invalid && passwordRef.dirty" class="text-danger">Invalid Password</small>
+    </div>
+    <div class="d-flex flex-column w-50 ms-1 mb-4">
+      <div class="form-floating w-100 confirm-password-group">
+        <input type="password" name="confirmPassword" [(ngModel)]="confirmPassword" #confirmPasswordRef="ngModel" class="form-control" id="confirmPassword" placeholder="ConfirmPassword" required minlength="5">
+        <button type="button" class="btn btn-link align-self-center" (click)="toggleConfirmPassword()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="black" class="bi bi-eye-fill" viewBox="0 0 16 16">
+            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+          </svg>
+        </button>
+        <label for="confirmPassword">Confirm Password</label>
+      </div>
+      <small *ngIf="confirmPasswordRef.dirty && password !== confirmPassword" class="text-danger">No Match</small>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary w-25 mb-3" [disabled]="signupForm.invalid || password !== confirmPassword">Sign Up</button>
+  <a class="login-btn" routerLink="/login">Log In</a>
+</form>

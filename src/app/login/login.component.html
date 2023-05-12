@@ -1,0 +1,27 @@
+<form #loginForm="ngForm" (ngSubmit)="onLoginFormSubmit(loginForm)" class="pt-5 d-flex flex-column align-items-center justify-content-center">
+  <div class="d-flex text-danger mb-3">
+    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
+      <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z"/>
+    </svg>
+    <h1 class="text-danger ms-1">CRM</h1>
+  </div>
+  <div *ngIf="failure" class="alert alert-danger" role="alert">Incorrect Email or Password</div>
+  <div class="form-floating w-25 mb-3">
+    <input type="text" name="email" [(ngModel)]="email" #emailRef="ngModel" class="form-control" id="email" required pattern="\S+@\S+\.\S+">
+    <label for="email">Email</label>
+    <small *ngIf="emailRef.invalid && emailRef.dirty" class="text-danger">Invalid Email</small>
+  </div>
+  <div class="form-floating w-25 d-flex password-group">
+    <input type="password" name="password" [(ngModel)]="password" #passwordRef="ngModel" class="form-control" id="password" required minlength="5">
+    <button type="button" class="btn btn-link align-self-center" (click)="togglePassword()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="black" class="bi bi-eye-fill" viewBox="0 0 16 16">
+        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+      </svg>
+    </button>
+    <label for="password">Password</label>
+  </div>
+  <small *ngIf="passwordRef.invalid && passwordRef.dirty" class="text-danger">Invalid Password</small>
+  <button type="submit" class="btn btn-primary w-25 my-3" [disabled]="loginForm.invalid">Log In</button>
+  <a class="signup-btn" routerLink="/signup">Sign Up</a>
+</form>

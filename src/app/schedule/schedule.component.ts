@@ -10,7 +10,7 @@ import { Task } from '../shared/task';
 })
 export class ScheduleComponent {
   selectedDate: Date = new Date(); formattedSelectedDate: string = "";
-  displayedColumns = ['task', 'contactId', 'time', 'status'];
+  displayedColumns = ['task', 'contactId', 'time', 'done'];
   displayedTasks: Task[] = [];
 
   constructor(@Inject(LOCALE_ID) public locale: string){}
@@ -18,19 +18,17 @@ export class ScheduleComponent {
   ngDoCheck(): void {
     if (Contact.taskProperties.length === 4){
       Task.tasks.push({ date: Contact.taskProperties[3], task: Contact.taskProperties[0],
-        contactId: Number(Contact.taskProperties[1]), time: Contact.taskProperties[2], status: 'Pending' });
+        contactId: Number(Contact.taskProperties[1]), time: Contact.taskProperties[2], done: false });
       Contact.taskProperties = [];
     }
+
     this.displayedTasks = []; this.formattedSelectedDate = formatDate(this.selectedDate, 'yyyy-MM-dd', this.locale);
     Task.tasks.forEach((el: Task) => {
       if (el.date === this.formattedSelectedDate){ this.displayedTasks.push(el); }
     });
   }
-}
 
-// export interface Element { date: string, task: string; contactId: number; time: string; status: string }
-// let ELEMENT_DATA: Element[] = [
-  // {date: '2023-05-10', task: 'Call', contactId: 0, time: '10:30', status: 'Pending'},
-  // {date: '2023-05-10', task: 'Email', contactId: 0, time: '11:30', status: 'Completed'},
-  // {date: '2023-05-10', task: 'Meeting', contactId: 0, time: '12:30', status: 'Pending'}
-// ];
+  taskStatus(element: Task){
+    element.done = true;
+  }
+}
