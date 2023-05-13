@@ -31,6 +31,7 @@ export class SignUpComponent {
     this.repeatedPhone = User.users.some((user: User) => { return user.phone === this.phone; });
     if (!this.repeatedEmail && !this.repeatedPhone){
       User.users.push(new User(this.firstName, this.lastName, this.email, this.phone, this.password));
+      User.loggedUser = User.users[User.users.length - 1];
       this.router.navigate(['/contacts']); signupForm.reset();
     }
   }

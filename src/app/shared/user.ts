@@ -8,6 +8,8 @@ export class User {
   ){}
 
   static users: User[] = [
-    new User("Giorgi", "Baliashvili", "giobali1998@gmail.com", "595903162", "123456")
+    new User("Levi", "Ackermann", "Levi@gmail.com", "1111111111", "123456"),
+    new User("Gojo", "Satoru", "Gojo@gmail.com", "2222222222", "123456")
   ];
+  static loggedUser: User = User.users[0];
 }

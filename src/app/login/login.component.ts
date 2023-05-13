@@ -9,17 +9,21 @@ import { User } from '../shared/user';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  email = "giobali1998@gmail.com"; password = "123456";
+  email = "Gojo@gmail.com"; password = "123456";
   @ViewChild('passwordRef', {read: ElementRef}) passwordInput!: ElementRef<HTMLInputElement>;
   failure = false;
 
   constructor(private router: Router){}
 
   onLoginFormSubmit(loginForm: NgForm) {
-    if (User.users.some((user: User) => { return user.email === this.email && user.password === this.password })){
-      this.router.navigate(['/contacts']); loginForm.reset();
+    let found = false;
+    for (let i = 0; i < User.users.length; i++){
+      if (User.users[i].email === this.email && User.users[i].password === this.password){
+        User.loggedUser = User.users[i]; this.router.navigate(['/contacts']);
+        loginForm.reset(); found = true; break;
+      }
     }
-    else { this.failure = true; }
+    if (!found) { this.failure = true; }
   }
 
   togglePassword() {

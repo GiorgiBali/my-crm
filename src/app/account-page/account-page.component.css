@@ -1,0 +1,13 @@
+.password-group {
+  position: relative;
+}
+
+.btn-link {
+  position: absolute;
+  left: 270px;
+  bottom: 2px;
+}
+
+small {
+  margin-top: 3px;
+}
