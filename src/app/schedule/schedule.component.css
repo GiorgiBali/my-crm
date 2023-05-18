@@ -16,3 +16,20 @@ table {
 .time-header {
   padding-right: 25px;
 }
+
+.taskUpdateModal-header {
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 170px;
+}
+
+.taskUpdateModal-title {
+  padding-top: 15px;
+  font-family: 'Times New Roman', Times, serif;
+  letter-spacing: 2px;
+  font-size: 25px;
+}
+
+.task-btn-close {
+  font-size: 18px;
+}

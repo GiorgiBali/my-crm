@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Contact } from '../shared/contact';
+import { Task } from '../shared/task';
 import { NgForm } from '@angular/forms';
+import { FirestoreService } from '../shared/firestore.service';
 
 @Component({
   selector: 'app-contacts',
@@ -8,34 +10,58 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./contacts.component.css']
 })
 export class ContactsComponent {
-  displayedContacts: Contact[] = []; globalContact!: Contact; page: number = 1;
-  mainCheckboxChecked: boolean = false; subCheckboxesChecked: boolean = false;
+  displayedContacts: Contact[] = this.firestoreService.allContacts; page: number = 1;
+  mainCheckboxChecked: boolean = false; subCheckboxesChecked: boolean = false; checkedContactsIndices: number[] = [];
   updatedFirstName!: string; updatedLastName!: string; updatedEmail!: string; updatedPhone!: string; updatedStatus!: string; updatedDate!: string;
-  task = ""; contactId = 0; time = ""; date = "";
+  taskContactIndex: number = -1; task: string = ""; time: string = ""; date: string = "";
+  @ViewChild('searchRef', {read: ElementRef}) searchInput!: ElementRef<HTMLInputElement>; searchMode: boolean = false; searchProperty: string = "Name"; searchQuery: string = "";
 
-  ngDoCheck(): void {
-    if (Contact.searchMode) { this.displayedContacts = Contact.searchedContacts; }
-    else { this.displayedContacts = Contact.contacts; }
+  constructor(public firestoreService: FirestoreService){}
+
+  onSearchSubmit(){
+    this.searchMode = true;
+    if (this.searchProperty === "Name"){
+      this.firestoreService.searchedContacts = this.firestoreService.allContacts.filter((contact: Contact) => { return `${contact.firstName} ${contact.lastName}` === this.searchQuery; }, this);
+    }
+    else if (this.searchProperty === "Email"){
+      this.firestoreService.searchedContacts = this.firestoreService.allContacts.filter((contact: Contact) => { return contact.email === this.searchQuery; }, this);
+    }
+    else if (this.searchProperty === "Phone"){
+      this.firestoreService.searchedContacts = this.firestoreService.allContacts.filter((contact: Contact) => { return contact.phone === this.searchQuery; }, this);
+    }
+    else if (this.searchProperty === "Status"){
+      this.firestoreService.searchedContacts = this.firestoreService.allContacts.filter((contact: Contact) => { return contact.status === this.searchQuery; }, this);
+    }
+    else if (this.searchProperty === "Date"){
+      this.firestoreService.searchedContacts = this.firestoreService.allContacts.filter((contact: Contact) => { return contact.date === this.searchQuery; }, this);
+    }
+    this.displayedContacts = this.firestoreService.searchedContacts;
+  }
+
+  resetSearch(searchForm: NgForm){
+    this.searchMode = false; this.displayedContacts = this.firestoreService.allContacts;
+    this.firestoreService.searchedContacts = []; this.searchInput.nativeElement.value = "";
   }
 
   prevPage(){ this.page--; }
   nextPage(){ this.page++; }
 
   deleteContact(contact: Contact, i: number) {
-    if (!Contact.searchMode){ Contact.contacts.splice(i, 1); }
+    this.firestoreService.deleteContactFromFS(contact.phone);
+    if (!this.searchMode){ this.firestoreService.allContacts.splice(i, 1); }
     else {
-      Contact.contacts = Contact.contacts.filter((obj: Contact) => { return obj.email !== contact.email; });
-      Contact.searchedContacts.splice(i, 1);
+      this.firestoreService.allContacts = this.firestoreService.allContacts.filter((cont: Contact) => { return cont.phone !== contact.phone; });
+      this.firestoreService.searchedContacts.splice(i, 1);
     }
   }
 
   addTask(contact: Contact, i: number) {
-    this.contactId = Number(i) + 1;
-    this.task = "Call";
+    this.taskContactIndex = i; this.task = "Call";
   }
 
   onTaskSubmit(taskForm: NgForm) {
-    Contact.taskProperties = [this.task, String(this.contactId), this.time, this.date];
+    this.firestoreService.allTasks.push(new Task(this.date, this.task, this.displayedContacts[this.taskContactIndex].email, this.time, ""));
+    this.firestoreService.addTaskToFS(this.firestoreService.allTasks[this.firestoreService.allTasks.length - 1]);
   }
 
   updateContact(contact: Contact) {
@@ -44,91 +70,66 @@ export class ContactsComponent {
   }
 
   onUpdateSubmit(updateUserForm: NgForm){
-    this.globalContact = this.findContactByEmail(updateUserForm.value.EmailAndPhone.email);
-    let i = Contact.contacts.findIndex(this.findGlobalContact, this);
-    Contact.contacts[i].firstName = this.updatedFirstName; Contact.contacts[i].lastName = this.updatedLastName;
-    Contact.contacts[i].email = this.updatedEmail; Contact.contacts[i].phone = this.updatedPhone;
-    Contact.contacts[i].status = this.updatedStatus; Contact.contacts[i].date = this.updatedDate;
-    if (Contact.searchMode){
-      i = Contact.searchedContacts.findIndex(this.findGlobalContact, this);
-      Contact.searchedContacts[i].firstName = this.updatedFirstName; Contact.searchedContacts[i].lastName = this.updatedLastName;
-      Contact.searchedContacts[i].email = this.updatedEmail; Contact.searchedContacts[i].phone = this.updatedPhone;
-      Contact.searchedContacts[i].status = this.updatedStatus; Contact.searchedContacts[i].date = this.updatedDate;
+    let i = 0;
+    while (i < this.firestoreService.allContacts.length){
+      if (this.firestoreService.allContacts[i].phone === updateUserForm.value.EmailAndPhone.phone){
+        this.firestoreService.allContacts[i].firstName = this.updatedFirstName; this.firestoreService.allContacts[i].lastName = this.updatedLastName;
+        this.firestoreService.allContacts[i].email = this.updatedEmail; this.firestoreService.allContacts[i].phone = this.updatedPhone;
+        this.firestoreService.allContacts[i].status = this.updatedStatus; this.firestoreService.allContacts[i].date = this.updatedDate;
+        break;
+      }
+      i++;
+    }
+    this.firestoreService.updateContactInFS(this.firestoreService.allContacts[i]);
+    if (this.searchMode){
+      i = 0;
+      while (i < this.firestoreService.searchedContacts.length){
+        if (this.firestoreService.searchedContacts[i].phone === updateUserForm.value.EmailAndPhone.phone){
+          this.firestoreService.searchedContacts[i].firstName = this.updatedFirstName; this.firestoreService.searchedContacts[i].lastName = this.updatedLastName;
+          this.firestoreService.searchedContacts[i].email = this.updatedEmail; this.firestoreService.searchedContacts[i].phone = this.updatedPhone;
+          this.firestoreService.searchedContacts[i].status = this.updatedStatus; this.firestoreService.searchedContacts[i].date = this.updatedDate;
+          break;
+        }
+        i++;
+      }
     }
   }
 
   mainCheckbox(event: any){
     if (event.target.checked){
       this.mainCheckboxChecked = true; this.subCheckboxesChecked = true;
-      Contact.contacts.forEach((contact: Contact) => {
-        let found = this.displayedContacts.some((displayedContact: Contact) => { return displayedContact.email === contact.email; });
-        if (found){ contact.checked = true; }
-      });
-      if (Contact.searchMode){
-        Contact.searchedContacts.forEach((contact: Contact) => {
-          let found = this.displayedContacts.some((displayedContact: Contact) => { return displayedContact.email === contact.email; });
-          if (found){ contact.checked = true; }
-        });
-      }
+      for (let i = 0; i < this.displayedContacts.length; i++){ this.checkedContactsIndices.push(i); }
     }
-    else {
-      this.mainCheckboxChecked = false; this.subCheckboxesChecked = false;
-      Contact.contacts.forEach((contact: Contact) => { contact.checked = false; });
-      if (Contact.searchMode){
-        Contact.searchedContacts.forEach((contact: Contact) => { contact.checked = false; });
-      }
-    }
+    else { this.mainCheckboxChecked = false; this.subCheckboxesChecked = false; this.checkedContactsIndices = []; }
   }
 
   subCheckbox(event: any) {
-    let email = this.displayedContacts[Number(event.target.value)-1].email;
-    if (event.target.checked){
-      Contact.contacts.forEach((contact: Contact) => {
-        if (contact.email === email) { contact.checked = true; }
-      });
-      if (Contact.searchMode){
-        Contact.searchedContacts.forEach((contact: Contact) => {
-          if (contact.email === email) { contact.checked = true; }
-        });
-      }
-    }
+    if (event.target.checked){ this.checkedContactsIndices.push(Number(event.target.value)-1); }
     else {
-      Contact.contacts.forEach((contact: Contact) => {
-        if (contact.email === email) { contact.checked = false; }
-      });
-      if (Contact.searchMode){
-        Contact.searchedContacts.forEach((contact: Contact) => {
-          if (contact.email === email) { contact.checked = false; }
-        });
-      }
+      const i = this.checkedContactsIndices.indexOf(Number(event.target.value)-1);
+      this.checkedContactsIndices.splice(i, 1);
+      if (this.checkedContactsIndices.length === 0) { this.mainCheckboxChecked = false; }
     }
   }
 
   deleteContacts(){
-    Contact.contacts = Contact.contacts.filter((contact: Contact) => {
-      if (contact.checked) { return false; }
+    const checkedContactsPhones: string[] = [];
+    this.checkedContactsIndices.forEach((i: number) => {
+      this.firestoreService.deleteContactFromFS(this.displayedContacts[i].phone);
+      checkedContactsPhones.push(this.displayedContacts[i].phone);
+    });
+    this.firestoreService.allContacts = this.firestoreService.allContacts.filter((contact: Contact) => {
+      if (checkedContactsPhones.includes(contact.phone)) { return false; }
       return true;
     });
-    if (Contact.searchMode){
-      Contact.searchedContacts = Contact.searchedContacts.filter((contact: Contact) => {
-        if (contact.checked) { return false; }
+    this.displayedContacts = this.firestoreService.allContacts;
+    if (this.searchMode){
+      this.firestoreService.searchedContacts = this.firestoreService.searchedContacts.filter((contact: Contact) => {
+        if (checkedContactsPhones.includes(contact.phone)) { return false; }
         return true;        
       });
+      this.displayedContacts = this.firestoreService.searchedContacts;
     }
-    this.mainCheckboxChecked = false; this.subCheckboxesChecked = false;
-  }
-
-  // --- Helper Functions ---
-
-  findGlobalContact(contact: Contact) {
-    return contact.email === this.globalContact.email;
-  }
-
-  findContactByEmail(email: string){
-    let i: number;
-    for (i = 0; i <= Contact.contacts.length-1; i++){
-      if (Contact.contacts[i].email === email) { break; }
-    }
-    return Contact.contacts[i];
+    this.mainCheckboxChecked = false; this.subCheckboxesChecked = false; this.checkedContactsIndices = [];
   }
 }

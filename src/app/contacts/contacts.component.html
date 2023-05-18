@@ -9,7 +9,22 @@
         <li><a class="dropdown-item checkbox-dropdown-item" (click)="deleteContacts()">Delete</a></li>
       </ul>
     </div>
-    <h1 class="contacts-title">Contacts</h1>
+    <form #searchForm="ngForm" (ngSubmit)="onSearchSubmit()" class="d-flex input-group w-50" role="search">
+      <select class="form-select searchSelect" aria-label="select" name="property" [(ngModel)]="searchProperty">
+        <option value="Name">Name</option><option value="Email">Email</option><option value="Phone">Phone</option><option value="Status">Status</option><option value="Date">Date</option>
+      </select>
+      <input class="form-control" name="search" [(ngModel)]="searchQuery" #searchRef="ngModel" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-light" type="submit">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+        </svg>
+      </button>
+      <button type="button" (click)="resetSearch(searchForm)" class="btn btn-light">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+          <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+        </svg>
+      </button>
+    </form>
     <ul class="pagination me-1">
       <li class="page-item"><a class="page-link step" (click)="prevPage()" aria-label="Previous" [class.disabled]="page === 1"><span aria-hidden="true" class="text-secondary">&laquo;</span></a></li>
       <li class="page-item page-number"><a class="page-link text-secondary" [class.disabled]="true">{{page}} / {{(displayedContacts.length - (displayedContacts.length%10)) / 10 + 1}}</a></li>
@@ -19,21 +34,13 @@
   <table class="table table-striped mb-0">
     <thead class="table-light">
       <tr>
-        <th scope="col"></th>
-        <th scope="col">ID</th>
-        <th scope="col">Name</th>
-        <th scope="col">Email</th>
-        <th scope="col">Phone Number</th>
-        <th scope="col">Status</th>
-        <th scope="col">Date</th>
-        <th scope="col">Options</th>
+        <th scope="col"></th><th scope="col">Name</th><th scope="col">Email</th><th scope="col">Phone Number</th><th scope="col">Status</th><th scope="col">Date</th><th scope="col">Options</th>
       </tr>
     </thead>
     <tbody class="table-group-divider">
       <ng-container *ngFor="let contact of displayedContacts.slice(page*10 - 10, page*10); let i=index">
         <tr>
           <th scope="row" class="pe-0"><div class="ms-2"><input class="form-check-input" [checked]="subCheckboxesChecked" (change)="subCheckbox($event)" type="checkbox" id="checkbox{{i+1}}" value="{{ i+1 }}"></div></th>
-          <td>{{ i + 10*(page-1) + 1 }}</td>
           <td>{{ contact.firstName }} {{ contact.lastName }}</td>
           <td>{{ contact.email }}</td>
           <td>{{ contact.phone }}</td>
@@ -124,7 +131,7 @@
                       </div>
                       <div class="form-floating w-75 mb-3">
                         <input type="date" name="taskDate" [(ngModel)]="date" class="form-control" id="taskDate" placeholder="Date" required>
-                        <label for="date">Date</label>
+                        <label for="taskDate">Date</label>
                       </div>
                       <div class="form-floating w-75">
                         <input type="time" name="time" [(ngModel)]="time" class="form-control" id="time" required>

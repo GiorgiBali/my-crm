@@ -1,6 +1,6 @@
 <div class="d-flex ms-5">
   <mat-card class="calendar-card me-5">
-    <mat-calendar [(selected)]="selectedDate"></mat-calendar>
+    <mat-calendar [(selected)]="selectedDate" (selectedChange)="onDateSelection()"></mat-calendar>
   </mat-card>
   <section class="table-container mat-elevation-z8" tabindex="0">
     <table mat-table [dataSource]="displayedTasks">
@@ -8,23 +8,52 @@
         <th mat-header-cell *matHeaderCellDef> Task </th>
         <td mat-cell *matCellDef="let element"> {{element.task}} </td>
       </ng-container>
-      <ng-container matColumnDef="contactId">
-        <th mat-header-cell *matHeaderCellDef> Contact ID </th>
-        <td mat-cell *matCellDef="let element"> {{element.contactId}} </td>
+      <ng-container matColumnDef="contact">
+        <th mat-header-cell *matHeaderCellDef> Contact </th>
+        <td mat-cell *matCellDef="let element"> {{element.contact}} </td>
       </ng-container>
       <ng-container matColumnDef="time">
         <th mat-header-cell *matHeaderCellDef class="time-header"> Time </th>
         <td mat-cell *matCellDef="let element"> {{element.time}} </td>
       </ng-container>
-      <ng-container matColumnDef="done">
-        <th mat-header-cell *matHeaderCellDef> Status </th>
+      <ng-container matColumnDef="options">
+        <th mat-header-cell *matHeaderCellDef> Options </th>
         <td mat-cell *matCellDef="let element">
-          <button type="button" class="btn btn-success" (click)="taskStatus(element)" [class.disabled]="element.done">
-            <span *ngIf="!element.done">Done</span>
-            <svg *ngIf="element.done" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-            </svg>
-          </button>
+          <button type="button" class="btn btn-primary me-1" (click)="updateTask(element)" data-bs-toggle="modal" data-bs-target="#taskUpdateModal">Update</button>
+            <div class="modal fade" id="taskUpdateModal" tabindex="-1" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header taskUpdateModal-header">
+                    <h1 class="modal-title taskUpdateModal-title">Update Task</h1>
+                    <button type="button" class="btn-close task-btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <form #updateTaskForm="ngForm" (ngSubmit)="onUpdateTaskSubmit(updateTaskForm)">
+                    <div class="modal-body d-flex flex-column align-items-center">
+                      <div class="form-floating w-75 mb-3">
+                        <select class="form-select" id="taskSelect" name="task" [(ngModel)]="updatedTask" required>
+                          <option value="Call">Call</option>
+                          <option value="Email">Email</option>
+                          <option value="Meeting">Meeting</option>
+                        </select>
+                        <label for="taskSelect">Task</label>
+                      </div>
+                      <div class="form-floating w-75 mb-3">
+                        <input type="date" name="taskDate" [(ngModel)]="updatedDate" class="form-control" id="taskDate" placeholder="Date" required>
+                        <label for="taskDate">Date</label>
+                      </div>
+                      <div class="form-floating w-75">
+                        <input type="time" name="time" [(ngModel)]="updatedTime" class="form-control" id="time" required>
+                        <label for="time">Time</label>
+                      </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                      <button type="submit" class="btn btn-primary w-50" data-bs-dismiss="modal" [disabled]="updateTaskForm.invalid">Save</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          <button type="button" class="btn btn-danger" (click)="deleteTask(element)">Done</button>
         </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
