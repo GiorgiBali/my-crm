@@ -5,7 +5,7 @@
     </svg>
     <h1 class="text-danger ms-1">CRM</h1>
   </div>
-  <div *ngIf="failure" class="alert alert-danger" role="alert">Incorrect Email or Password</div>
+  <div *ngIf="this.authService.signInFailure" class="alert alert-danger" role="alert">Incorrect Email or Password</div>
   <div class="form-floating w-25 mb-3">
     <input type="text" name="email" [(ngModel)]="email" #emailRef="ngModel" class="form-control" id="email" required pattern="\S+@\S+\.\S+">
     <label for="email">Email</label>

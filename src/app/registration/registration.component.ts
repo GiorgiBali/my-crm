@@ -11,8 +11,8 @@ import { FirestoreService } from '../shared/firestore.service';
 export class RegistrationComponent {
   constructor(private firestoreService: FirestoreService){}
 
-  firstName: string = ""; lastName: string = ""; email: string = ""; phone: string = ""; status: string = ""; date: string = "";
-  repeatedEmail: boolean = false; repeatedPhone: boolean = false; isStatus: boolean = false; isDate: boolean = false;
+  firstName = ""; lastName = ""; email = ""; phone = ""; status = ""; date = "";
+  repeatedEmail = false; repeatedPhone = false; isStatus = false; isDate = false;
 
   onRegistrationSubmit(registrationForm: NgForm){
     this.repeatedEmail = this.firestoreService.allContacts.some((contact: Contact) => { return contact.email === this.email; });

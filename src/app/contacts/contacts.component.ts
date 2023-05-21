@@ -10,11 +10,11 @@ import { FirestoreService } from '../shared/firestore.service';
   styleUrls: ['./contacts.component.css']
 })
 export class ContactsComponent {
-  displayedContacts: Contact[] = this.firestoreService.allContacts; page: number = 1;
-  mainCheckboxChecked: boolean = false; subCheckboxesChecked: boolean = false; checkedContactsIndices: number[] = [];
-  updatedFirstName!: string; updatedLastName!: string; updatedEmail!: string; updatedPhone!: string; updatedStatus!: string; updatedDate!: string;
-  taskContactIndex: number = -1; task: string = ""; time: string = ""; date: string = "";
-  @ViewChild('searchRef', {read: ElementRef}) searchInput!: ElementRef<HTMLInputElement>; searchMode: boolean = false; searchProperty: string = "Name"; searchQuery: string = "";
+  displayedContacts: Contact[] = this.firestoreService.allContacts; page = 1;
+  mainCheckboxChecked = false; subCheckboxesChecked = false; checkedContactsIndices: number[] = [];
+  updatedFirstName = ""; updatedLastName = ""; updatedEmail = ""; updatedPhone = ""; updatedStatus = ""; updatedDate = "";
+  taskContactIndex = -1; task = ""; time = ""; date = "";
+  @ViewChild('searchRef', {read: ElementRef}) searchInput!: ElementRef<HTMLInputElement>; searchMode = false; searchProperty = "Name"; searchQuery = "";
 
   constructor(public firestoreService: FirestoreService){}
 

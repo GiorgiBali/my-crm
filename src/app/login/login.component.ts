@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { User } from '../shared/user';
+import { AuthService } from '../shared/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -9,21 +9,13 @@ import { User } from '../shared/user';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  email = "Gojo@gmail.com"; password = "123456";
+  email = "giobali1998@gmail.com"; password = "1234567";
   @ViewChild('passwordRef', {read: ElementRef}) passwordInput!: ElementRef<HTMLInputElement>;
-  failure = false;
 
-  constructor(private router: Router){}
+  constructor(private router: Router, public authService: AuthService){}
 
   onLoginFormSubmit(loginForm: NgForm) {
-    let found = false;
-    for (let i = 0; i < User.users.length; i++){
-      if (User.users[i].email === this.email && User.users[i].password === this.password){
-        User.loggedUser = User.users[i]; this.router.navigate(['/contacts']);
-        loginForm.reset(); found = true; break;
-      }
-    }
-    if (!found) { this.failure = true; }
+    this.authService.signInUser(this.email, this.password, this.router, loginForm);
   }
 
   togglePassword() {

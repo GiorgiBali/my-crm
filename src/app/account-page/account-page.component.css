@@ -1,13 +1,30 @@
+.save-and-restore-btns {
+  padding-left: 270px;
+}
+
+.restore-btn {
+  margin-left: 50px;
+}
+
 .password-group {
   position: relative;
 }
 
 .btn-link {
   position: absolute;
-  left: 270px;
-  bottom: 2px;
+  left: 260px;
+  bottom: 3px;
 }
 
 small {
   margin-top: 3px;
+}
+
+.psw-update-header {
+  padding-top: 12px;
+}
+
+.psw-save-btn {
+  width: 100px;
+  height: 45px;
 }

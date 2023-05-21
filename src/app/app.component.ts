@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { FirestoreService } from './shared/firestore.service';
+import { AuthService } from './shared/auth.service';
+import { RoutingService } from './shared/routing.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,17 +10,17 @@ import { FirestoreService } from './shared/firestore.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  url = '/login';
 
-  constructor(private router: Router, private firestoreService: FirestoreService){
-  }
+  constructor(private router: Router, private firestoreService: FirestoreService, private authService: AuthService, public routingService: RoutingService){}
 
   ngOnInit(): void {
     this.firestoreService.getAllContactsFromFS();
     this.firestoreService.getAllTasksFromFS();
+    this.authService.userUpdate();
   }
 
-  ngDoCheck(): void {
-    this.url = this.router.url;
+  ngDoCheck(){
+    if (this.router.url === '/login' || this.router.url === '/signup'){ this.routingService.headerNeeded = false; }
+    else { this.routingService.headerNeeded = true; }
   }
 }

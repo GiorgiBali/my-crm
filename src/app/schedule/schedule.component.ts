@@ -12,7 +12,7 @@ import { FirestoreService } from '../shared/firestore.service';
 })
 export class ScheduleComponent {
   selectedDate!: Date; displayedColumns = ['task', 'contact', 'time', 'options']; displayedTasks: Task[] = [];
-  updatedTaskId!: string; updatedTask!: string; updatedDate!: string; updatedTime!: string;
+  updatedTaskId = ""; updatedTask = ""; updatedDate = ""; updatedTime = "";
 
   constructor(@Inject(LOCALE_ID) public locale: string, private firestoreService: FirestoreService){}
 
