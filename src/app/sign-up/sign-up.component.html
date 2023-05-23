@@ -22,7 +22,7 @@
       <input type="email" name="email" [(ngModel)]="email" #emailRef="ngModel" class="form-control" id="email" placeholder="Email" required pattern="\S+@\S+\.\S+">
       <label for="email">Email</label>
       <small *ngIf="emailRef.invalid && emailRef.dirty" class="text-danger pe-4">Invalid Email</small>
-      <small *ngIf="this.authService.signUpEmailDuplicate" class="text-danger">Email Already Exists</small>
+      <small *ngIf="this.authService.signUpEmailExists" class="text-danger">Email Already Exists</small>
     </div>
     <div class="d-flex flex-column w-50 ms-1 mb-4">
       <div class="form-floating w-100 password-group">

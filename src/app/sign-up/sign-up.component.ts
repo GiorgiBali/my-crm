@@ -1,6 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
 import { AuthService } from '../shared/auth.service';
 import { RoutingService } from '../shared/routing.service';
 
@@ -13,7 +12,11 @@ export class SignUpComponent {
   firstName = ""; lastName = ""; email = ""; password = "";
   @ViewChild('passwordRef', {read: ElementRef}) passwordInput!: ElementRef<HTMLInputElement>;
 
-  constructor(private router: Router, public authService: AuthService, private routingService: RoutingService){}
+  constructor(public authService: AuthService, private routingService: RoutingService){}
+
+  ngOnInit(){
+    this.routingService.headerNeeded = false;
+  }
 
   togglePassword() {
     if (this.passwordInput.nativeElement.type === "password") { this.passwordInput.nativeElement.type = "text"; }
@@ -21,7 +24,6 @@ export class SignUpComponent {
   }
 
   onsignupFormSubmit(signupForm: NgForm){
-      this.authService.createUser(this.firstName, this.lastName, this.email, this.password, this.router, signupForm);
-      this.routingService.headerNeeded = true;
+      this.authService.createUser(this.firstName, this.lastName, this.email, this.password, signupForm);
   }
 }

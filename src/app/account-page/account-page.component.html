@@ -1,44 +1,46 @@
-<form #accountForm="ngForm" (ngSubmit)="onAccountFormSubmit(accountForm)" class="pt-2 d-flex flex-column align-items-center justify-content-center">
-  <h1 class="fs-2 mt-2">Account Info</h1>
-  <div class="form-floating w-50 mb-3">
-    <input type="text" name="firstname" [(ngModel)]="firstName" #firstNameRef="ngModel" class="form-control" id="firstname" placeholder="First Name" required pattern="[A-Za-z]+">
-    <label for="firstname">First Name</label>
-    <small *ngIf="firstNameRef.invalid && firstNameRef.dirty" class="text-danger">Invalid First Name</small>
-  </div>
-  <div class="form-floating w-50 mb-3">
-    <input type="text" name="lastname" [(ngModel)]="lastName" #lastNameRef="ngModel" class="form-control" id="lastname" placeholder="Last Name" required pattern="[A-Za-z]+">
-    <label for="lastname">Last Name</label>
-    <small *ngIf="lastNameRef.invalid && lastNameRef.dirty" class="text-danger">Invalid Last Name</small>
-  </div>
-  <div class="form-floating w-50 mb-3">
-    <input type="email" name="email" [(ngModel)]="email" #emailRef="ngModel" class="form-control" id="email" placeholder="Email" required pattern="\S+@\S+\.\S+">
-    <label for="email">Email</label>
-    <small *ngIf="emailRef.invalid && emailRef.dirty" class="text-danger pe-4">Invalid Email</small>
-    <small *ngIf="repeatedEmail" class="text-danger">Email Already Exists</small>
-  </div>
-  <div class="save-and-restore-btns d-flex w-50">
-    <button type="submit" class="btn btn-primary" [disabled]="accountForm.invalid || accountForm.pristine">Update</button>
-    <button type="button" class="restore-btn btn btn-primary" (click)="restoreCurrentValues()">Restore</button>
-  </div>
-  <div *ngIf="successfulUpdate" class="alert alert-success mt-3" role="alert">Successful Update!</div>
-</form>
-<hr>
-<form #updatePasswordForm="ngForm" (ngSubmit)="onUpdatePasswordFormSubmit(updatePasswordForm)" class="my-4 ps-4 d-flex">
-  <h1 class="psw-update-header me-4">Update Password</h1>
-  <div class="form-floating w-25 password-group">
-    <input type="password" name="password" [(ngModel)]="password" #passwordRef="ngModel" class="form-control" id="password" placeholder="Password" required minlength="5">
-    <button type="button" class="btn btn-link align-self-center" (click)="togglePassword()">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="black" class="bi bi-eye-fill" viewBox="0 0 16 16">
-        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
-        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
-      </svg>
-    </button>
-    <label for="password">New Password</label>
-    <small *ngIf="passwordRef.invalid && passwordRef.dirty" class="text-danger">Invalid Password</small>
-  </div>
-  <button type="submit" class="psw-save-btn btn btn-primary ms-4 align-self-center" [disabled]="updatePasswordForm.invalid">Save</button>
-</form>
-<hr>
-<div class="d-flex justify-content-center mt-4">
-  <button type="button" class="btn btn-danger" (click)="this.authService.deleteAccount()">Delete Account</button>
+<div class="forms d-flex pt-3">
+  <form #accountForm="ngForm" (ngSubmit)="onUserDetailsFormSubmit(accountForm)" class="account-details-form ps-3 d-flex flex-column align-items-start">
+    <div class="account-details-header d-flex mb-2">
+      <h1 class="account-header fs-2 me-5">User Details</h1>
+      <button type="submit" class="btn btn-primary me-5" [disabled]="accountForm.invalid || accountForm.pristine">Update</button>
+      <div *ngIf="this.authService.successfulUserDetailsUpdate" class="alert alert-success m-0 pt-2" role="alert">Successful Update</div>
+      <div *ngIf="this.authService.failedUserDetailsUpdate" class="alert alert-danger m-0 pt-2" role="alert">Fresh Sign-In Required</div>
+    </div>
+    <div class="details-group form-floating mb-3">
+      <input type="text" name="firstname" [(ngModel)]="this.authService.firstName" #firstNameRef="ngModel" class="form-control" id="firstname" placeholder="First Name" required pattern="[A-Za-z]+">
+      <label for="firstname">First Name</label>
+      <small *ngIf="firstNameRef.invalid && firstNameRef.dirty" class="text-danger">Invalid First Name</small>
+    </div>
+    <div class="details-group form-floating mb-3">
+      <input type="text" name="lastname" [(ngModel)]="this.authService.lastName" #lastNameRef="ngModel" class="form-control" id="lastname" placeholder="Last Name" required pattern="[A-Za-z]+">
+      <label for="lastname">Last Name</label>
+      <small *ngIf="lastNameRef.invalid && lastNameRef.dirty" class="text-danger">Invalid Last Name</small>
+    </div>
+    <div class="details-group form-floating">
+      <input type="email" name="email" [(ngModel)]="this.authService.email" #emailRef="ngModel" class="form-control" id="email" placeholder="Email" required pattern="\S+@\S+\.\S+">
+      <label for="email">Email</label>
+      <small *ngIf="emailRef.invalid && emailRef.dirty" class="text-danger pe-4">Invalid Email</small>
+      <small *ngIf="repeatedEmail" class="text-danger">Email Already Exists</small>
+    </div>
+  </form>
+  <form #updatePasswordForm="ngForm" (ngSubmit)="onUpdatePasswordFormSubmit(updatePasswordForm)" class="psw-update-form d-flex flex-column align-items-center">
+    <h1 class="psw-update-header fs-2 mb-4">Update Password</h1>
+    <div class="form-floating password-group w-75 mb-4">
+      <input type="password" name="password" [(ngModel)]="password" #passwordRef="ngModel" class="form-control" id="password" placeholder="Password" required minlength="5">
+      <button type="button" class="btn btn-link align-self-center" (click)="togglePassword()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="black" class="bi bi-eye-fill" viewBox="0 0 16 16">
+          <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+          <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+        </svg>
+      </button>
+      <label for="password">New Password</label>
+      <small *ngIf="passwordRef.invalid && passwordRef.dirty" class="text-danger">Invalid Password</small>
+    </div>
+    <button type="submit" class="btn btn-primary w-25 mb-3" [disabled]="updatePasswordForm.invalid">Save</button>
+    <div *ngIf="this.authService.successfulPswUpdate" class="alert alert-success" role="alert">Successful Update</div>
+    <div *ngIf="this.authService.failedPswUpdate" class="alert alert-danger" role="alert">Fresh Sign-In Required</div>
+  </form>
+</div>
+<div class="d-flex justify-content-center">
+  <button type="button" class="btn btn-danger" routerLink="/login" (click)="this.authService.deleteAccount()">Delete Account</button>
 </div>

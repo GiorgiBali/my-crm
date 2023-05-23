@@ -1,9 +1,23 @@
-.save-and-restore-btns {
-  padding-left: 270px;
+.forms {
+  margin-bottom: 80px;
 }
 
-.restore-btn {
-  margin-left: 50px;
+.account-details-form {
+  width: 60%;
+}
+
+.account-details-header {
+  width: 80%;
+  height: 36px;
+}
+
+.account-header {
+  font-family: 'Times New Roman', Times, serif;
+  letter-spacing: 2px;
+}
+
+.details-group {
+  width: 80%;
 }
 
 .password-group {
@@ -12,7 +26,7 @@
 
 .btn-link {
   position: absolute;
-  left: 260px;
+  left: 330px;
   bottom: 3px;
 }
 
@@ -20,11 +34,11 @@ small {
   margin-top: 3px;
 }
 
-.psw-update-header {
-  padding-top: 12px;
+.psw-update-form {
+  width: 40%;
 }
 
-.psw-save-btn {
-  width: 100px;
-  height: 45px;
+.psw-update-header {
+  font-family: 'Times New Roman', Times, serif;
+  letter-spacing: 2px;  
 }

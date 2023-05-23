@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'createContact', component: RegistrationComponent },
   { path: 'contacts', component: ContactsComponent },
   { path: 'schedule', component: ScheduleComponent },
-  { path: '', redirectTo: '/login', pathMatch: 'full' }
+  { path: '**', redirectTo: '/login', pathMatch: 'full' }
 ];
 
 @NgModule({

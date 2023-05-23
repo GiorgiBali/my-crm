@@ -18,8 +18,8 @@ h1 {
 
 .btn-link {
   position: absolute;
-  left: 270px;
-  bottom: 2px;
+  right: 0;
+  bottom: 10%;
 }
 
 small {

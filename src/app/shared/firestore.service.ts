@@ -5,15 +5,20 @@ import { Task } from './task';
 
 @Injectable({ providedIn: 'root' })
 export class FirestoreService {
-	constructor(private firestore: Firestore) {}
+  contactsCollection = collection(this.firestore, 'contacts'); allContacts: Contact[] = []; searchedContacts: Contact[] = []; contactsPulled = false; totalPages = 1;
+	tasksCollection = collection(this.firestore, 'tasks'); allTasks: Task[] = []; tasksPulled = false;
 
-  contactsCollection = collection(this.firestore, 'contacts'); allContacts: Contact[] = [];
-	searchedContacts: Contact[] = [];
-	tasksCollection = collection(this.firestore, 'tasks'); allTasks: Task[] = [];
+	constructor(private firestore: Firestore) {}
 
 	async getAllContactsFromFS(){
 		const querySnapshot = await getDocs(query(this.contactsCollection));
 		querySnapshot.forEach((doc: any) => { this.allContacts.push(doc.data() as Contact); });
+		this.calcTotalPages(this.allContacts.length);
+	}
+
+	calcTotalPages(contactCount: number){
+		if (contactCount === 0){ this.totalPages = 1; }
+    else { this.totalPages = Math.ceil(contactCount/10); }
 	}
 
   addContactToFS(contact: Contact){

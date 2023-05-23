@@ -26,20 +26,13 @@
       <small *ngIf="repeatedPhone" class="text-danger">Phone Already Exists</small>
     </div>
   </div>
-  <div ngModelGroup="StatusAndDate" class="d-flex justify-content-evenly">
-    <div class="form-floating mb-4 w-25">
-      <select class="form-select" id="statusSelect" name="status" [(ngModel)]="status" #statusRef="ngModel" required>
-        <option value="Newcomer">Newcomer</option>
-        <option value="Lead">Lead</option>
-      </select>
-      <label for="statusSelect">Status</label>
-      <small *ngIf="!isStatus && registrationForm.submitted" class="text-danger">Please Choose Status</small>
-    </div>
-    <div class="form-floating mb-4 w-25">
-      <input type="date" name="date" [(ngModel)]="date" #dateRef="ngModel" class="form-control" id="date" placeholder="Date" required>
-      <label for="date">Date</label>
-      <small *ngIf="!isDate && registrationForm.submitted" class="text-danger">Please Choose Date</small>
-    </div>
+  <div class="form-floating mb-4 w-25 align-self-center">
+    <select class="form-select" id="statusSelect" name="status" [(ngModel)]="status" #statusRef="ngModel">
+      <option value="New">New</option>
+      <option value="Lead">Lead</option>
+    </select>
+    <label for="statusSelect">Status</label>
+    <small *ngIf="statusRef.value === ''" class="text-danger">Please Choose Status</small>
   </div>
-  <button type="submit" class="btn btn-primary w-25 align-self-center mt-4">Register</button>
+  <button type="submit" class="btn btn-primary w-25 align-self-center mt-4" [disabled]="registrationForm.invalid">Register</button>
 </form>

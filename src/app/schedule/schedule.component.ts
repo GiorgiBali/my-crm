@@ -16,6 +16,12 @@ export class ScheduleComponent {
 
   constructor(@Inject(LOCALE_ID) public locale: string, private firestoreService: FirestoreService){}
 
+  ngOnInit(){
+    if (!this.firestoreService.tasksPulled){
+      this.firestoreService.getAllTasksFromFS(); this.firestoreService.tasksPulled = true;
+    }
+  }
+
   onDateSelection(){
     const formattedSelectedDate: string = formatDate(this.selectedDate, 'yyyy-MM-dd', this.locale); this.displayedTasks = [];
     this.firestoreService.allTasks.forEach((task: Task) => { if (task.date === formattedSelectedDate){ this.displayedTasks.push(task); }});

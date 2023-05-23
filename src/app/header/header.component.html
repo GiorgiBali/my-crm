@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand navbar-dark bg-dark mb-4">
+<nav *ngIf="this.routingService.headerNeeded" class="navbar navbar-expand navbar-dark bg-dark mb-4">
   <div class="container-fluid d-flex justify-content-between px-4">
     <app-logo></app-logo>
     <app-navbar-items class="w-75"></app-navbar-items>

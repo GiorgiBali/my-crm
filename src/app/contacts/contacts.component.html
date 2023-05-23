@@ -26,9 +26,9 @@
       </button>
     </form>
     <ul class="pagination me-1">
-      <li class="page-item"><a class="page-link step" (click)="prevPage()" aria-label="Previous" [class.disabled]="page === 1"><span aria-hidden="true" class="text-secondary">&laquo;</span></a></li>
-      <li class="page-item page-number"><a class="page-link text-secondary" [class.disabled]="true">{{page}} / {{(displayedContacts.length - (displayedContacts.length%10)) / 10 + 1}}</a></li>
-      <li class="page-item"><a class="page-link step" (click)="nextPage()" aria-label="Next" [class.disabled]="displayedContacts.length - page*10 <= 0"><span aria-hidden="true" class="text-secondary">&raquo;</span></a></li>
+      <li class="page-item"><a class="page-link step" (click)="prevPage()" aria-label="Previous" [class.disabled]="currentPage === 1"><span aria-hidden="true" class="text-secondary">&laquo;</span></a></li>
+      <li class="page-item page-number"><a class="page-link text-secondary" [class.disabled]="true">{{currentPage}} / {{firestoreService.totalPages}}</a></li>
+      <li class="page-item"><a class="page-link step" (click)="nextPage()" aria-label="Next" [class.disabled]="displayedContacts.length - currentPage*10 <= 0"><span aria-hidden="true" class="text-secondary">&raquo;</span></a></li>
     </ul>
   </nav>
   <table class="table table-striped mb-0">
@@ -38,7 +38,7 @@
       </tr>
     </thead>
     <tbody class="table-group-divider">
-      <ng-container *ngFor="let contact of displayedContacts.slice(page*10 - 10, page*10); let i=index">
+      <ng-container *ngFor="let contact of displayedContacts.slice(currentPage*10 - 10, currentPage*10); let i=index">
         <tr>
           <th scope="row" class="pe-0"><div class="ms-2"><input class="form-check-input" [checked]="subCheckboxesChecked" (change)="subCheckbox($event)" type="checkbox" id="checkbox{{i+1}}" value="{{ i+1 }}"></div></th>
           <td>{{ contact.firstName }} {{ contact.lastName }}</td>
@@ -88,7 +88,7 @@
                       <div ngModelGroup="StatusAndDate" class="d-flex justify-content-evenly">
                         <div class="form-floating w-50 me-1">
                           <select class="form-select" id="statusSelect" name="status" [(ngModel)]="updatedStatus" #statusRef="ngModel" required>
-                            <option value="Newcomer">Newcomer</option>
+                            <option value="New">New</option>
                             <option value="Lead">Lead</option>
                           </select>
                           <label for="statusSelect">Status</label>
@@ -106,7 +106,7 @@
                 </div>
               </div>
             </div>
-            <button type="button" (click)="addTask(contact, i + 10*(page-1))" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#taskModal">
+            <button type="button" (click)="addTask(contact, i + 10*(currentPage-1))" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#taskModal">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="green" class="bi bi-calendar-plus" viewBox="0 0 16 16">
                 <path d="M8 7a.5.5 0 0 1 .5.5V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5A.5.5 0 0 1 8 7z"/>
                 <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
@@ -145,7 +145,7 @@
                 </div>
               </div>
             </div>
-            <button type="button" (click)="deleteContact(contact, i + 10*(page-1))" class="btn btn-link">
+            <button type="button" (click)="deleteContact(contact, i + 10*(currentPage-1))" class="btn btn-link">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="red" class="bi bi-x-lg" viewBox="0 0 16 16">
                 <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
               </svg>

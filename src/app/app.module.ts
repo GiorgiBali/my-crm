@@ -21,12 +21,12 @@ import { provideDatabase,getDatabase } from '@angular/fire/database';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 
 @NgModule({
-  declarations: [ AppComponent, ContactsComponent, RegistrationComponent, ScheduleComponent, FooterComponent, LoginComponent,
-    AccountPageComponent, SignUpComponent ],
-  imports: [ BrowserModule, AppRoutingModule, FormsModule, BrowserAnimationsModule, MaterialModule, HeaderModule,
+  declarations: [AppComponent, ContactsComponent, RegistrationComponent, ScheduleComponent, FooterComponent, LoginComponent,
+    AccountPageComponent, SignUpComponent],
+  imports: [BrowserModule, AppRoutingModule, FormsModule, BrowserAnimationsModule, MaterialModule, HeaderModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)), provideAnalytics(() => getAnalytics()),
-    provideAuth(() => getAuth()), provideDatabase(() => getDatabase()), provideFirestore(() => getFirestore()) ],
-  providers: [ ScreenTrackingService,UserTrackingService ],
+    provideAuth(() => getAuth()), provideDatabase(() => getDatabase()), provideFirestore(() => getFirestore())],
+  providers: [ScreenTrackingService, UserTrackingService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

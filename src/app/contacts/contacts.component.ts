@@ -10,13 +10,24 @@ import { FirestoreService } from '../shared/firestore.service';
   styleUrls: ['./contacts.component.css']
 })
 export class ContactsComponent {
-  displayedContacts: Contact[] = this.firestoreService.allContacts; page = 1;
+  displayedContacts: Contact[] = []; currentPage = 1;
   mainCheckboxChecked = false; subCheckboxesChecked = false; checkedContactsIndices: number[] = [];
   updatedFirstName = ""; updatedLastName = ""; updatedEmail = ""; updatedPhone = ""; updatedStatus = ""; updatedDate = "";
   taskContactIndex = -1; task = ""; time = ""; date = "";
   @ViewChild('searchRef', {read: ElementRef}) searchInput!: ElementRef<HTMLInputElement>; searchMode = false; searchProperty = "Name"; searchQuery = "";
 
   constructor(public firestoreService: FirestoreService){}
+
+  ngOnInit(){
+    if (!this.firestoreService.contactsPulled){
+      this.firestoreService.getAllContactsFromFS(); this.displayedContacts = this.firestoreService.allContacts;
+      this.firestoreService.contactsPulled = true;
+    }
+    else { this.displayedContacts = this.firestoreService.allContacts; this.firestoreService.calcTotalPages(this.displayedContacts.length); }
+  }
+
+  prevPage(){ this.currentPage--; }
+  nextPage(){ this.currentPage++; }
 
   onSearchSubmit(){
     this.searchMode = true;
@@ -35,16 +46,14 @@ export class ContactsComponent {
     else if (this.searchProperty === "Date"){
       this.firestoreService.searchedContacts = this.firestoreService.allContacts.filter((contact: Contact) => { return contact.date === this.searchQuery; }, this);
     }
-    this.displayedContacts = this.firestoreService.searchedContacts;
+    this.displayedContacts = this.firestoreService.searchedContacts; this.firestoreService.calcTotalPages(this.displayedContacts.length);
   }
 
   resetSearch(searchForm: NgForm){
     this.searchMode = false; this.displayedContacts = this.firestoreService.allContacts;
     this.firestoreService.searchedContacts = []; this.searchInput.nativeElement.value = "";
+    this.firestoreService.calcTotalPages(this.displayedContacts.length);
   }
-
-  prevPage(){ this.page--; }
-  nextPage(){ this.page++; }
 
   deleteContact(contact: Contact, i: number) {
     this.firestoreService.deleteContactFromFS(contact.phone);
@@ -53,6 +62,7 @@ export class ContactsComponent {
       this.firestoreService.allContacts = this.firestoreService.allContacts.filter((cont: Contact) => { return cont.phone !== contact.phone; });
       this.firestoreService.searchedContacts.splice(i, 1);
     }
+    this.firestoreService.calcTotalPages(this.displayedContacts.length);
   }
 
   addTask(contact: Contact, i: number) {
@@ -131,5 +141,6 @@ export class ContactsComponent {
       this.displayedContacts = this.firestoreService.searchedContacts;
     }
     this.mainCheckboxChecked = false; this.subCheckboxesChecked = false; this.checkedContactsIndices = [];
+    this.firestoreService.calcTotalPages(this.displayedContacts.length);
   }
 }

@@ -11,7 +11,7 @@ export class AccountComponent {
   constructor(public authService: AuthService){}
 
   accountIconClick(){
-    this.firstName = this.authService.currentFirstName;
-    this.lastName = this.authService.currentLastName;
+    this.firstName = this.authService.firstName;
+    this.lastName = this.authService.lastName;
   }
 }

@@ -5,14 +5,14 @@
     </svg>
     <h1 class="text-danger ms-1">CRM</h1>
   </div>
-  <div *ngIf="this.authService.signInFailure" class="alert alert-danger" role="alert">Incorrect Email or Password</div>
+  <div *ngIf="this.authService.signInUserNotFound" class="alert alert-danger" role="alert">Incorrect Email</div>
+  <div *ngIf="this.authService.signInWrongPassword" class="alert alert-danger" role="alert">Incorrect Password</div>
   <div class="form-floating w-25 mb-3">
-    <input type="text" name="email" [(ngModel)]="email" #emailRef="ngModel" class="form-control" id="email" required pattern="\S+@\S+\.\S+">
+    <input type="text" name="email" [(ngModel)]="email" #emailRef="ngModel" class="form-control" id="email" placeholder="Email" required pattern="\S+@\S+\.\S+">
     <label for="email">Email</label>
-    <small *ngIf="emailRef.invalid && emailRef.dirty" class="text-danger">Invalid Email</small>
   </div>
   <div class="form-floating w-25 d-flex password-group">
-    <input type="password" name="password" [(ngModel)]="password" #passwordRef="ngModel" class="form-control" id="password" required minlength="5">
+    <input type="password" name="password" [(ngModel)]="password" #passwordRef="ngModel" class="form-control" id="password" placeholder="Password" required minlength="5">
     <button type="button" class="btn btn-link align-self-center" (click)="togglePassword()">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="black" class="bi bi-eye-fill" viewBox="0 0 16 16">
         <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
@@ -21,7 +21,6 @@
     </button>
     <label for="password">Password</label>
   </div>
-  <small *ngIf="passwordRef.invalid && passwordRef.dirty" class="text-danger">Invalid Password</small>
   <button type="submit" class="btn btn-primary w-25 my-3" [disabled]="loginForm.invalid">Log In</button>
   <a class="signup-btn" routerLink="/signup">Sign Up</a>
 </form>
