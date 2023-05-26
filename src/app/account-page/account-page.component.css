@@ -26,8 +26,8 @@
 
 .btn-link {
   position: absolute;
-  left: 330px;
-  bottom: 3px;
+  right: 0;
+  bottom: 10%;
 }
 
 small {

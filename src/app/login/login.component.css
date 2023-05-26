@@ -19,6 +19,7 @@ h1 {
 .btn-link {
   position: absolute;
   right: 0;
+  bottom: 10%;
 }
 
 small {
