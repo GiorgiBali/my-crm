@@ -9,7 +9,7 @@ import { RoutingService } from './routing.service';
 export class AuthService {
   firstName = ""; lastName = ""; email = "";
   auth = getAuth(); user: any = this.getUser(); signup = false;
-  signInUserNotFound = false; signInWrongPassword = false; signUpEmailExists = false;
+  signInUserNotFound = false; signInWrongPassword = false; signUpEmailExists = false; repeatedEmail = false;
   successfulUserDetailsUpdate = false; failedUserDetailsUpdate = false; successfulPswUpdate = false; failedPswUpdate = false;
 
   constructor(private firestoreService: FirestoreService, private router: Router, private routingService: RoutingService){}
@@ -60,14 +60,17 @@ export class AuthService {
 
   setUserName(user: any, firstName: string, lastName: string){
     updateProfile(user, { displayName: `${firstName} ${lastName}` })
-      .then(() => { this.successfulUserDetailsUpdate = true; this.firstName = firstName; this.lastName = lastName; })
+      .then(() => { this.firstName = firstName; this.lastName = lastName; })
       .catch((error) => { this.failedUserDetailsUpdate = true; });
   }
 
   setUserEmail(user: any, email: string){
     updateEmail(user, email)
       .then(() => { this.successfulUserDetailsUpdate = true; this.email = email; })
-      .catch((error) => { this.failedUserDetailsUpdate = true; });
+      .catch((error) => {
+        if (error.code === "auth/email-already-in-use"){ this.repeatedEmail = true; }
+        else { this.failedUserDetailsUpdate = true; }
+      });
   }
 
   setUserPassword(user: any, password: string){

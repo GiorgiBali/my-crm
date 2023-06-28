@@ -20,12 +20,12 @@
       <input type="email" name="email" [(ngModel)]="this.authService.email" #emailRef="ngModel" class="form-control" id="email" placeholder="Email" required pattern="\S+@\S+\.\S+">
       <label for="email">Email</label>
       <small *ngIf="emailRef.invalid && emailRef.dirty" class="text-danger pe-4">Invalid Email</small>
-      <small *ngIf="repeatedEmail" class="text-danger">Email Already Exists</small>
+      <small *ngIf="this.authService.repeatedEmail" class="text-danger">Email Already Exists</small>
     </div>
   </form>
   <form #updatePasswordForm="ngForm" (ngSubmit)="onUpdatePasswordFormSubmit(updatePasswordForm)" class="psw-update-form d-flex flex-column align-items-center">
     <h1 class="psw-update-header fs-2 mb-4">Update Password</h1>
-    <div class="form-floating password-group w-75 mb-4">
+    <div class="form-floating password-group w-75">
       <input type="password" name="password" [(ngModel)]="password" #passwordRef="ngModel" class="form-control" id="password" placeholder="Password" required minlength="5">
       <button type="button" class="btn btn-link align-self-center" (click)="togglePassword()">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="black" class="bi bi-eye-fill" viewBox="0 0 16 16">
@@ -34,9 +34,9 @@
         </svg>
       </button>
       <label for="password">New Password</label>
-      <small *ngIf="passwordRef.invalid && passwordRef.dirty" class="text-danger">Invalid Password</small>
     </div>
-    <button type="submit" class="btn btn-primary w-25 mb-3" [disabled]="updatePasswordForm.invalid">Save</button>
+    <small *ngIf="passwordRef.invalid && passwordRef.dirty" class="text-danger">Invalid Password</small>
+    <button type="submit" class="btn btn-primary w-25 mt-4 mb-3" [disabled]="updatePasswordForm.invalid">Save</button>
     <div *ngIf="this.authService.successfulPswUpdate" class="alert alert-success" role="alert">Successful Update</div>
     <div *ngIf="this.authService.failedPswUpdate" class="alert alert-danger" role="alert">Fresh Sign-In Required</div>
   </form>

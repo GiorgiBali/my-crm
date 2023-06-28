@@ -8,13 +8,13 @@ import { AuthService } from '../shared/auth.service';
   styleUrls: ['./account-page.component.css']
 })
 export class AccountPageComponent {
-  password = ""; repeatedEmail = false;
-  @ViewChild('passwordRef', {read: ElementRef}) passwordInput!: ElementRef<HTMLInputElement>;
+  password = ""; @ViewChild('passwordRef', {read: ElementRef}) passwordInput!: ElementRef<HTMLInputElement>;
 
   constructor(public authService: AuthService){}
 
   ngOnInit(){
-    this.authService.successfulUserDetailsUpdate = false;
+    this.authService.successfulUserDetailsUpdate = false; this.authService.failedUserDetailsUpdate = false; this.authService.repeatedEmail = false;
+    this.authService.successfulPswUpdate = false; this.authService.failedPswUpdate = false;
   }
 
   togglePassword() {
