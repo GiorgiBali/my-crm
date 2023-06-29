@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MatCardModule } from '@angular/material/card';
-import { MatTableModule } from '@angular/material/table';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
+import { MatLegacyTableModule as MatTableModule } from '@angular/material/legacy-table';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 
 const MaterialComponents = [MatDatepickerModule, MatNativeDateModule, MatCardModule, MatTableModule, MatButtonModule];
 
