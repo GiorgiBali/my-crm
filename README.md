@@ -1,27 +1,23 @@
-# MyCrm
+# MyCRM
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.3.
+## Description
 
-## Development server
+MyCRM app can be used by small and middle sized companies in order to keep track of their customers.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Features
 
-## Code scaffolding
+Contacts: Customer list.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Schedule: Tasks planned for customers.
 
-## Build
+## How To Use
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Account: Required to use the app / Modified in 'View Account' page.
 
-## Running unit tests
+Contacts: Each contact can be updated or deleted from options / Search is available by category.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Schedule: Created from options on 'Contacts' page / Choosing a date on calendar makes that day's tasks visible.
 
-## Running end-to-end tests
+## Technologies
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Project is written in Angular Framework. Bootstrap and Angular Material are used for styling. Firebase is used for backend.
